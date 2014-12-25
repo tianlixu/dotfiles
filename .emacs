@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;
-;;                                    Alex Xu                               ;;
+;;                                    Alex Xu                                 ;;
 ;;                                    Jun 1, 2005                             ;;
 ;;                                                                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -64,12 +64,6 @@ occurence of CHAR."
 (setq column-number-mode t)
 (setq line-number-mode t)
 
-;; close the tool bar
-(tool-bar-mode -1)
-
-;; close the menu bar
-(menu-bar-mode -1)
-
 ;; highlight current line
 ;(global-hl-line-mode)
 
@@ -132,27 +126,6 @@ occurence of CHAR."
 (require 'ido)
 (ido-mode t)
 
-(require 'redo)
-(global-set-key "\M-r" 'redo)
-
-;; choose color therme. hober under console and gnome2 for X.
-(require 'color-theme)
-;;(color-theme-gnome2)
-(if (equal window-system nil)
-    (color-theme-hober)
-    (color-theme-gnome2))
-
-;; tabbar.el
-;;(require 'tabbar)
-;;(tabbar-mode)
-
-;;browse-kill-ring
-(require 'browse-kill-ring)
-(global-set-key [(control c)(k)] 'browse-kill-ring)
-(browse-kill-ring-default-keybindings)
-
-(require 'xcscope)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; my own key bindings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -205,12 +178,6 @@ occurence of CHAR."
 
 (global-set-key "\C-c\C-f" 'grep-find)
 (global-set-key "\C-c\C-o" 'occur)
-
-;; wb-line-number.el
-(set-scroll-bar-mode nil)   ; no scroll bar, even in x-window system (recommended)
-(require 'wb-line-number)
-;; wb-line-number-toogle
-(global-set-key "\C-c\C-l" 'wb-line-number-toggle)
 
 ;; clear whole buffer and save.
 (global-set-key "\C-c\C-s" (function (lambda()
