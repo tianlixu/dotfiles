@@ -263,3 +263,40 @@ do kill lines as `dd' in vim."
 
 ;; gdb is installed into /usr/local/bin by Homebrew
 (setq exec-path (append exec-path '("/usr/local/bin")))
+
+
+;; publishing org-mode files to HTML
+(require 'ox-publish)
+;; or #+OPTIONS: ^:nil   in your .org file
+(setq org-export-with-sub-superscripts nil)
+
+(setq org-publish-project-alist
+      '(
+
+        ;; ... add all the components here (see below)...
+        ("org-notes"
+         :base-directory "~/org/"
+         :base-extension "org"
+         :publishing-directory "~/public_html/"
+         :recursive t
+         :publishing-function org-html-publish-to-html
+         :headline-levels 4             ; Just the default for this project.
+         :html-head "<link rel=\"stylesheet\"
+             href=\"./css/fb.css\" type=\"text/css\"/>"
+         :auto-preamble t
+         :author "Alex"
+         :email "tianli.xu@emc.com"
+         )
+
+        ("org-static"
+         :base-directory "~/org/"
+         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|html"
+         :publishing-directory "~/public_html/"
+         :recursive t
+         :publishing-function org-publish-attachment
+         )
+
+        ("org" :components ("org-notes" "org-static"))
+
+
+        ))
