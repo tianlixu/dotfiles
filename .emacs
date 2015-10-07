@@ -1,7 +1,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;
 ;;                                    Alex Xu                                 ;;
-;;                                    Jun 1, 2005                             ;;
+;;                               From Jun 1, 2005                             ;;
 ;;                                                                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; dos to unix
@@ -66,9 +66,10 @@ occurence of CHAR."
 ;; display line and column number
 (setq column-number-mode t)
 (setq line-number-mode t)
+(setq menu-bar-mode -1)
 
 ;; highlight current line
-;(global-hl-line-mode)
+(global-hl-line-mode)
 
 ;; highlight marked block
 (setq transient-mark-mode t)
@@ -243,27 +244,14 @@ do kill lines as `dd' in vim."
 (global-set-key [?\C-w] 'my-kill-region)
 
 ;; C-w and M-w improved end here
-(put 'upcase-region 'disabled nil)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
- '(column-number-mode t))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "White" :foreground "Black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 160 :width normal :foundry "nil" :family "Menlo")))))
 
 ;; gdb is installed into /usr/local/bin by Homebrew
 (setq exec-path (append exec-path '("/usr/local/bin")))
 
+
+
+(package-initialize)
+(setq package-enable-at-startup nil)
 
 ;; publishing org-mode files to HTML
 (require 'ox-publish)
@@ -275,9 +263,9 @@ do kill lines as `dd' in vim."
 
         ;; ... add all the components here (see below)...
         ("org-notes"
-         :base-directory "~/org/"
+         :base-directory "~/dev/github/tianlixu.github.io/org/"
          :base-extension "org"
-         :publishing-directory "~/public_html/"
+         :publishing-directory "~/dev/github/tianlixu.github.io/"
          :recursive t
          :publishing-function org-html-publish-to-html
          :headline-levels 4             ; Just the default for this project.
@@ -289,9 +277,9 @@ do kill lines as `dd' in vim."
          )
 
         ("org-static"
-         :base-directory "~/org/"
+         :base-directory "~/dev/github/tianlixu.github.io/org/"
          :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|html"
-         :publishing-directory "~/public_html/"
+         :publishing-directory "~/dev/github/tianlixu.github.io/"
          :recursive t
          :publishing-function org-publish-attachment
          )
