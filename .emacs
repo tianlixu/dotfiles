@@ -66,7 +66,7 @@ occurence of CHAR."
 ;; display line and column number
 (setq column-number-mode t)
 (setq line-number-mode t)
-(setq menu-bar-mode -1)
+(menu-bar-mode -1)
 
 ;; highlight current line
 (global-hl-line-mode)
