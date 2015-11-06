@@ -291,3 +291,7 @@ do kill lines as `dd' in vim."
 
 ; sort directories first, sort by time(newest on the top)
 (setq dired-listing-switches "-aBhlt  --group-directories-first")
+
+; display all long lines with word-wrap enabled
+(setq-default word-wrap t)
+(setq-default truncate-lines nil)
