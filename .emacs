@@ -43,6 +43,10 @@
  (require 'wdired)
  (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
 
+;; use c++ mode for .h and .cpp
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-mode))
+
 ;;
 (defun wy-go-to-char (n char)
   "Move forward to Nth occurence of CHAR.
