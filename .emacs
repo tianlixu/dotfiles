@@ -263,9 +263,9 @@ do kill lines as `dd' in vim."
 
         ;; ... add all the components here (see below)...
         ("org-notes"
-         :base-directory "~/dev/github/tianlixu.github.io/org/"
+         :base-directory "~/dev/github/tianlixu.github.io/more/org/"
          :base-extension "org"
-         :publishing-directory "~/dev/github/tianlixu.github.io/"
+         :publishing-directory "~/dev/github/tianlixu.github.io/more/public_html/"
          :recursive t
          :publishing-function org-html-publish-to-html
          :headline-levels 4             ; Just the default for this project.
@@ -273,13 +273,13 @@ do kill lines as `dd' in vim."
              href=\"./css/fb.css\" type=\"text/css\"/>"
          :auto-preamble t
          :author "Alex"
-         :email "tianli.xu@emc.com"
+         :email "tianli.xu@gmail.com"
          )
 
         ("org-static"
-         :base-directory "~/dev/github/tianlixu.github.io/org/"
+         :base-directory "~/dev/github/tianlixu.github.io/more/org/"
          :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|html"
-         :publishing-directory "~/dev/github/tianlixu.github.io/"
+         :publishing-directory "~/dev/github/tianlixu.github.io/more/public_html/"
          :recursive t
          :publishing-function org-publish-attachment
          )
@@ -288,6 +288,39 @@ do kill lines as `dd' in vim."
 
 
         ))
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
 
 ; sort directories first, sort by time(newest on the top)
 (setq dired-listing-switches "-aBhlt  --group-directories-first")
+
+; display all long lines with word-wrap enabled
+(setq-default word-wrap t)
+(setq-default truncate-lines nil)
+
+
+;; ==================== DICT ==================================
+(defun bing-dict ()
+  "Search current word in bing dictionary."
+  (interactive)
+  (save-restriction
+    (let (start end)
+      (skip-chars-backward "A-Za-z0–9") (setq start (point))
+      (skip-chars-forward "A-Za-z0–9") (setq end (point))
+      (setq current-word (buffer-substring start end))
+;      (eww (concat "http://cn.bing.com/dict/search?q=" current-word))
+      (eww (concat "http://www.oxfordlearnersdictionaries.com/us/definition/english/" current-word))
+      (if (not (string= (buffer-name) "*eww*"))
+          (switch-to-buffer-other-window "*eww*"))
+      (hl-line-mode "*eww*")
+                                        ;wait for 2 second, because the buffer will refresh soon and it go back to top line.
+      (sit-for 2)
+      (search-forward current-word nil t 2)
+                                        ;mark the word for 1 second
+      (end-of-line)
+      (set-mark (line-beginning-position))
+      (sit-for 1)
+      (deactivate-mark)
+      ))
+  )
+(global-set-key (kbd "C-c q") 'bing-dict)
