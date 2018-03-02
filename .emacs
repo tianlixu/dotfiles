@@ -1,7 +1,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                            ;;
-;;                                    Alex Xu                                 ;;
-;;                               From Jun 1, 2005                             ;;
+;;                                Alex Xu                                     ;;
+;;                       Jun 1, 2005 - Mar 02, 2018                           ;;
 ;;                                                                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; dos to unix
@@ -328,3 +328,31 @@ do kill lines as `dd' in vim."
       ))
   )
 (global-set-key (kbd "C-c q") 'bing-dict)
+
+;; elpy for python3
+;(package-initialize)
+(elpy-enable)
+(setq elpy-rpc-python-command "python3")
+;; For interactive shell
+(setq python-shell-interpreter "python3")
+
+(when (require 'flycheck nil t)
+  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+    (add-hook 'elpy-mode-hook 'flycheck-mode))
+
+;; https://github.com/nsf/gocode/tree/master/emacs-company
+(custom-set-faces
+ '(company-preview
+   ((t (:foreground "darkgray" :underline t))))
+ '(company-preview-common
+   ((t (:inherit company-preview))))
+ '(company-tooltip
+   ((t (:background "lightgray" :foreground "black"))))
+ '(company-tooltip-selection
+   ((t (:background "steelblue" :foreground "white"))))
+ '(company-tooltip-common
+   ((((type x)) (:inherit company-tooltip :weight bold))
+    (t (:inherit company-tooltip))))
+ '(company-tooltip-common-selection
+   ((((type x)) (:inherit company-tooltip-selection :weight bold))
+        (t (:inherit company-tooltip-selection)))))
