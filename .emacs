@@ -356,3 +356,13 @@ do kill lines as `dd' in vim."
  '(company-tooltip-common-selection
    ((((type x)) (:inherit company-tooltip-selection :weight bold))
         (t (:inherit company-tooltip-selection)))))
+
+;; C-c C-c to save buffer first, so that I don't have to save and then run it
+(defun elpy-save-and-run()
+  (interactive)
+  (save-buffer)
+  (elpy-shell-send-region-or-buffer))
+(eval-after-load "elpy"
+     '(define-key elpy-mode-map (kbd "C-c C-c") 'elpy-save-and-run))
+
+;; end of elpy configuration
