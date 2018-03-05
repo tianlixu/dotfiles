@@ -253,9 +253,8 @@ do kill lines as `dd' in vim."
 (setq exec-path (append exec-path '("/usr/local/bin")))
 
 
-
-(package-initialize)
 (setq package-enable-at-startup nil)
+(package-initialize)
 
 ;; publishing org-mode files to HTML
 (require 'ox-publish)
@@ -297,6 +296,10 @@ do kill lines as `dd' in vim."
 
 ; sort directories first, sort by time(newest on the top)
 (setq dired-listing-switches "-aBhlt  --group-directories-first")
+;; use GNU ls for osx
+;; install gls with: brew install coreutils
+(when (eq system-type 'darwin)
+  (setq insert-directory-program "gls" dired-use-ls-dired t))
 
 ; display all long lines with word-wrap enabled
 (setq-default word-wrap t)
@@ -332,9 +335,11 @@ do kill lines as `dd' in vim."
 ;; elpy for python3
 ;(package-initialize)
 (elpy-enable)
-(setq elpy-rpc-python-command "python3")
+(setq elpy-rpc-python-command "/usr/local/bin/python3")
 ;; For interactive shell
-(setq python-shell-interpreter "python3")
+(setq python-shell-interpreter "/usr/local/bin/python3")
+(add-to-list 'python-shell-completion-native-disabled-interpreters "python3")
+(setq python-shell-completion-native-enable nil)
 
 (when (require 'flycheck nil t)
   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
@@ -342,20 +347,26 @@ do kill lines as `dd' in vim."
 
 ;; https://github.com/nsf/gocode/tree/master/emacs-company
 (custom-set-faces
- '(company-preview
-   ((t (:foreground "darkgray" :underline t))))
- '(company-preview-common
-   ((t (:inherit company-preview))))
- '(company-tooltip
-   ((t (:background "lightgray" :foreground "black"))))
- '(company-tooltip-selection
-   ((t (:background "steelblue" :foreground "white"))))
- '(company-tooltip-common
-   ((((type x)) (:inherit company-tooltip :weight bold))
-    (t (:inherit company-tooltip))))
- '(company-tooltip-common-selection
-   ((((type x)) (:inherit company-tooltip-selection :weight bold))
-        (t (:inherit company-tooltip-selection)))))
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-preview ((t (:foreground "darkgray" :underline t))))
+ '(company-preview-common ((t (:inherit company-preview))))
+ '(company-tooltip ((t (:background "lightgray" :foreground "black"))))
+ '(company-tooltip-common ((((type x)) (:inherit company-tooltip :weight bold)) (t (:inherit company-tooltip))))
+ '(company-tooltip-common-selection ((((type x)) (:inherit company-tooltip-selection :weight bold)) (t (:inherit company-tooltip-selection))))
+ '(company-tooltip-selection ((t (:background "steelblue" :foreground "white")))))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (org-edna exec-path-from-shell flycheck flylisp elpy))))
+
+(set-face-attribute 'default nil :height 165)
 
 ;; C-c C-c to save buffer first, so that I don't have to save and then run it
 (defun elpy-save-and-run()
