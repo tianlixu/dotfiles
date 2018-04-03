@@ -259,7 +259,9 @@ do kill lines as `dd' in vim."
 ;; publishing org-mode files to HTML
 (require 'ox-publish)
 ;; or #+OPTIONS: ^:nil   in your .org file
-(setq org-export-with-sub-superscripts nil)
+;; (setq org-export-with-sub-superscripts nil)
+(setq org-use-sub-superscripts '{})
+(setq org-export-with-sub-superscripts '{})
 
 (setq org-publish-project-alist
       '(
@@ -291,6 +293,7 @@ do kill lines as `dd' in vim."
 
 
         ))
+(define-key org-mode-map (kbd "C-c C-p") 'org-publish-all)
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
