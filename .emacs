@@ -293,7 +293,12 @@ do kill lines as `dd' in vim."
 
 
         ))
-(define-key org-mode-map (kbd "C-c C-p") 'org-publish-all)
+;; save the mouse position after publish instead of moving to the beginning of the buffer
+(define-key org-mode-map (kbd "C-c C-p") (function (lambda()
+                                                     (interactive)
+                                                     (point-to-register 1)
+                                                     (org-publish-all)
+                                                     (jump-to-register 1))))
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
