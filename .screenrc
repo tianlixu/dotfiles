@@ -3,8 +3,24 @@ startup_message off
 
 defflow off
 
+
+
+# Allow bold colors - necessary for some reason
+attrcolor b ".I"
+
+# Tell screen how to set colors. AB = background, AF=foreground
+termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+
+# Erase background with current bg color
+defbce "on"
+
+# Enable 256 color term
+term xterm-256color
+
+
+
 # define a bigger scrollback, default is 100 lines, I like large scrollback
-defscrollback 1024
+defscrollback 4096
 
 
 # An alternative hardstatus to display a bar at the bottom listing the
@@ -12,7 +28,9 @@ defscrollback 1024
 # enabled if there is no hardstatus setting for your terminal)
 hardstatus on
 hardstatus alwayslastline
-hardstatus string "%{.bW}%-w%{.rW}%n %t%{-}%+w %=%{..G} %H %{..Y} %m/%d %C%a "
+#hardstatus string "%{.bW}%-w%{.rW}%n %t%{-}%+w %=%{..G} %H %{..Y} %m/%d %C%a "
+hardstatus string '%{= Kd} %{= Kd}%-w%{= Kr}[%{= KW}%n %t%{= Kr}]%{= Kd}%+w %-= %{KG} %H%{KW}|%{KY}%101`%{KW}|%D %M %d %Y%{= Kc} %C%A%{-}'
+
 
 
 # key bingdings
@@ -34,6 +52,10 @@ bindkey ^[. next
 # Escape key is `  (I use C-a too much in Emacs)
 escape ``
 
+# Hide hardstatus: `` f 
+bind f eval "hardstatus ignore"
+# Show hardstatus: `` F
+bind F eval "hardstatus alwayslastline"
 
 # some useful keys for resizing
 bind = resize =
