@@ -331,7 +331,7 @@ do kill lines as `dd' in vim."
 ; display all long lines with word-wrap enabled
 (setq-default word-wrap t)
 (setq-default truncate-lines nil)
-(setq org-startup-truncated nil)
+
 
 ;; ==================== DICT ==================================
 (defun bing-dict ()
