@@ -4,6 +4,22 @@
 ;;                       Jun 1, 2005 - Mar 02, 2018                           ;;
 ;;                                                                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; ===================================
+;; MELPA Package Support
+;; ===================================
+;; Enables basic packaging support
+(require 'package)
+;; Adds the Melpa archive to the list of available repositories
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
+;; Initializes the package infrastructure
+(package-initialize)
+;; If there are no archived package contents, refresh them
+(when (not package-archive-contents)
+  (package-refresh-contents))
+
+
 ;; dos to unix
 (defun dos-unix () (interactive)
   (goto-char (point-min))
@@ -70,7 +86,7 @@ occurence of CHAR."
 ;; display line and column number
 (setq column-number-mode t)
 (setq line-number-mode t)
-(menu-bar-mode -1)
+(menu-bar-mode t)
 
 ;; highlight current line
 (global-hl-line-mode)
@@ -259,18 +275,16 @@ do kill lines as `dd' in vim."
 ;; publishing org-mode files to HTML
 (require 'ox-publish)
 ;; or #+OPTIONS: ^:nil   in your .org file
-;; (setq org-export-with-sub-superscripts nil)
-(setq org-use-sub-superscripts '{})
-(setq org-export-with-sub-superscripts '{})
+(setq org-export-with-sub-superscripts nil)
 
 (setq org-publish-project-alist
       '(
 
         ;; ... add all the components here (see below)...
         ("org-notes"
-         :base-directory "~/dev/github/tianlixu.github.io/more/org/"
+         :base-directory "~/dev/github/tlxu.github.io/home/org/"
          :base-extension "org"
-         :publishing-directory "~/dev/github/tianlixu.github.io/more/public_html/"
+         :publishing-directory "~/dev/github/tlxu.github.io/home/public_html/"
          :recursive t
          :publishing-function org-html-publish-to-html
          :headline-levels 4             ; Just the default for this project.
@@ -282,9 +296,9 @@ do kill lines as `dd' in vim."
          )
 
         ("org-static"
-         :base-directory "~/dev/github/tianlixu.github.io/more/org/"
+         :base-directory "~/dev/github/tlxu.github.io/home/org/"
          :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|html"
-         :publishing-directory "~/dev/github/tianlixu.github.io/more/public_html/"
+         :publishing-directory "~/dev/github/tlxu.github.io/home/public_html/"
          :recursive t
          :publishing-function org-publish-attachment
          )
@@ -293,12 +307,17 @@ do kill lines as `dd' in vim."
 
 
         ))
+(setq org-use-sub-superscripts '{})
+(setq org-export-with-sub-superscripts '{})
 ;; save the mouse position after publish instead of moving to the beginning of the buffer
 (define-key org-mode-map (kbd "C-c C-p") (function (lambda()
                                                      (interactive)
                                                      (point-to-register 1)
                                                      (org-publish-all)
                                                      (jump-to-register 1))))
+(setq org-toggle-inline-images t)
+(setq org-display-inline-images t)
+(setq org-image-actual-width nil)
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
@@ -343,10 +362,12 @@ do kill lines as `dd' in vim."
 ;; elpy for python3
 ;(package-initialize)
 (elpy-enable)
-(setq elpy-rpc-python-command "/usr/local/bin/python3")
+
+(setq elpy-rpc-python-command "/usr/local/Cellar/python@3.8/3.8.2/bin/python3")
 ;; For interactive shell
-(setq python-shell-interpreter "/usr/local/bin/python3")
+(setq python-shell-interpreter "/usr/local/Cellar/python@3.8/3.8.2/bin/python3")
 (add-to-list 'python-shell-completion-native-disabled-interpreters "python3")
+
 (setq python-shell-completion-native-enable nil)
 
 (when (require 'flycheck nil t)
@@ -370,9 +391,15 @@ do kill lines as `dd' in vim."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["#2e3436" "#a40000" "#4e9a06" "#c4a000" "#204a87" "#5c3566" "#729fcf" "#eeeeec"])
+ '(custom-enabled-themes (quote (deeper-blue)))
+ '(ein:output-area-inlined-images t)
  '(package-selected-packages
    (quote
-    (org-edna exec-path-from-shell flycheck flylisp elpy))))
+    (htmlize ein markdown-mode org-edna exec-path-from-shell flycheck flylisp elpy))))
 
 (set-face-attribute 'default nil :height 165)
 
